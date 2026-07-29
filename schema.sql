@@ -30,22 +30,44 @@ create table if not exists branche(
         id integer primary key autoincrement,
         name text
                     );
+INSERT OR IGNORE INTO branche (name)
+VALUES( 'esn');
 create table if not exists domaine(
         id integer primary key autoincrement,
         name text
                     );
+INSERT OR IGNORE INTO domaine (name)
+VALUES( 'la cybersécurité');
+INSERT OR IGNORE INTO domaine (name)
+VALUES( 'les réseaux');
+INSERT OR IGNORE INTO domaine (name)
+VALUES( 'le développement');
 create table if not exists secteurdapplication(
         id integer primary key autoincrement,
         name text
                     );
+INSERT OR IGNORE INTO secteurdapplication (name)
+VALUES( 'immobilier');
+INSERT OR IGNORE INTO secteurdapplication (name)
+VALUES( 'commercial');
+INSERT OR IGNORE INTO secteurdapplication (name)
+VALUES( 'vente');
 create table if not exists job(
         id integer primary key autoincrement,
         name text
                     );
+INSERT OR IGNORE INTO job (name)
+VALUES( 'développeur(se) web');
+INSERT OR IGNORE INTO job (name)
+VALUES( 'technicien(ne) support informatique');
 create table if not exists country(
         id integer primary key autoincrement,
         name text
                     );
+INSERT OR IGNORE INTO country (name)
+VALUES( 'spain');
+INSERT OR IGNORE INTO country (name)
+VALUES( 'italy');
 create table if not exists user(
         id integer primary key autoincrement,
         username text,
