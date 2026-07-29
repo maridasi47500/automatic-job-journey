@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block montitre %}
+debut de mes mots: bienvenue dans automatic job journey
+{% endblock %}
+{% block content %}
+<h1># automatic-job-journey</h1>
+{% for x in users | reverse %}
+ <li>{{ x["first_name"]  }}</li>
+
+{% endfor %} 
+fin de mes mots : informatique 
+commercial vente ou immobilier
+Le secteur informatique regroupe lensemble des activités économiques liées au numérique, divisé en branches (les types dentreprises comme les ESN ou les éditeurs de logiciels) et en domaines (les spécialités techniques comme le développement, les réseaux ou la cybersécurité).
+
+Les secteurs dapplication désignent les grands domaines dactivité où une technologie, un produit ou un savoir-faire est utilisé, notamment la santé, la finance et lindustrie.
+{% endblock %}
+{% block liens %}
+<a href="/">welcome</a>
+{% endblock %}
+<a href="/add_one_branche"> add one branche</a><a href="/add_one_domaine"> add one domaine</a><a href="/add_one_secteurdapplication"> add one secteurdapplication</a><a href="/add_one_job"> add one job</a><a href="/add_one_country"> add one country</a><a href="/add_one_user"> add one user</a>
