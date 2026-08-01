@@ -1,1 +1,44 @@
-{% extends 'base.html' %}{% block content %}<form method="POST"><div class="field"><label>username</label><input name="username"/></div><div class="field"><label>email</label><input name="email"/></div><div class="field"><label>phone</label><input name="phone"/></div><div class="field"><label>country_id</label><input name="country_id"/></div><div class="field"><label>job_id</label><input name="job_id"/></div><div class="field"><label>secteurdapplication_id</label><input name="secteurdapplication_id"/></div><div class="field"><label>domaine_id</label><input name="domaine_id"/></div><div class="field"><label>branche_id</label><input name="branche_id"/></div><div class="actions"><input type="submit"/></div></form>{% for x in users %}{{x["username"] }}{% endfor %}{% endblock %}{% block liens %}<a href="/">bienvenue</a><a href="/add_one_user"> add one user</a>{% endblock %}
+{% extends 'base.html' %}{% block content %}<form method="POST"><div class="field"><label>username</label><input name="username"/></div><div class="field"><label>email</label><input name="email"/></div><div class="field"><label>phone</label><input name="phone"/></div>
+
+<div class="field"><label>country_id</label>
+
+<select name="country_id">
+{% for x in countries %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+
+</div>
+
+<div class="field"><label>job_id</label>
+<select name="job_id">
+{% for x in jobs %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+
+</div>
+<div class="field"><label>secteurdapplication_id</label>
+<select name="secteurdapplication_id">
+{% for x in secteurdapplications %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="field"><label>domaine_id</label>
+<select name="domaine_id">
+{% for x in domaines %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="field"><label>branche_id</label>
+<select name="branche_id">
+{% for x in branches %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="actions"><input type="submit"/></div></form>{% for x in users %}{{x["username"] }}{% endfor %}{% endblock %}{% block liens %}<a href="/">bienvenue</a><a href="/add_one_user"> add one user</a>{% endblock %}

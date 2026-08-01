@@ -91,14 +91,20 @@ def add_one_country():
 
 @app.route("/add_one_user", methods=["GET","POST"])
 def add_one_user():
+    countries = query_db('select * from country')
+    domaines = query_db('select * from domaine')
+    branches = query_db('select * from branche')
+    secteurdapplications = query_db('select * from secteurdapplication')
+    jobs = query_db('select * from job')
 
     if request.method == 'POST':
 
         the_username = "anonyme"
         one_user = query_db("insert into user (username,email,phone,country_id,job_id,secteurdapplication_id,domaine_id,branche_id) values (:username,:email,:phone,:country_id,:job_id,:secteurdapplication_id,:domaine_id,:branche_id)",request.form)
         user = query_db('select * from user')
-        return render_template("userform.html", users=user, one_user=one_user, the_title="add new user")
+        return render_template("userform.html", users=user, one_user=one_user, the_title="add new user",jobs=jobs, secteurdapplications=secteurdapplications, branches=branches, domaines=domaines, countries=countries)
     user = query_db('select * from user')
+
     one_user = query_db("select * from user limit 1", one=True)
-    return render_template("userform.html", users=user, one_user=one_user, the_title="add new user")
+    return render_template("userform.html", users=user, one_user=one_user, the_title="add new user",jobs=jobs, secteurdapplications=secteurdapplications, branches=branches, domaines=domaines, countries=countries)
 
