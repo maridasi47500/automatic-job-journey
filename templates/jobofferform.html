@@ -1,0 +1,77 @@
+{% extends 'base.html' %}{% block content %}
+
+<form method="POST">
+	<div class="field"><label>title</label><input name="title"/></div>
+	<div class="field"><label>company</label><input name="company"/></div>
+	<div class="field"><label>content</label><textarea name="content"></textarea></div>
+	<div class="field"><label>city</label><select name="city_id">
+
+			{% for x in cities %}<option value="{{x["id"]}}">{{x["name"] }}</option>{% endfor %}
+		</select></div>
+
+
+	<div class="actions"><input type="submit"/></div></form>
+
+{% for x in joboffers%}
+<hr>
+<p>{{x["title"] }}</p>
+<p>
+
+<p class="myjoboffer" data-myid="{{x["id"]}}" style="width:100%;min-height:100px;">
+
+{{x["content"] }}
+</p>
+<a href="" class="addaskill" data-myid="{{x["id"]}}" > add selected text as a skill for this job offer</a>
+</p>
+<p class="skills" data-myid="{{x["id"]}}">
+{% for y in x["skills"].split("=%=") %}
+<span>
+	{{y}}
+</span>
+{% endfor %}
+
+
+</p>
+
+
+
+
+{% endfor %}
+{% endblock %}
+
+{% block js %}
+<script>
+	$(function(){
+		$(".addaskill").click(function(){
+			var x = $(this).data('myid');
+			var y = $('[data-myid='+String(x)+'].skills')[0];
+			$.ajax({type: 'post', url: '/addskill', data: {jobofferid:String(x), mytext: getSelectedText()}, success: function(data){console.log(data);y.innerHTML+='<span>'+data.name+'</span>';} });
+			return false;
+		});
+	});
+function getSelectedText() {
+let selectedText = '';
+
+if (window.getSelection) {
+// Modern browsers
+selectedText = window.getSelection().toString();
+} else if (document.getSelection) {
+// Older browsers
+selectedText = document.getSelection().toString();
+} else if (document.selection) {
+// IE <= 8
+selectedText = document.selection.createRange().text;
+}
+
+console.log("Selected Text:", selectedText);
+return selectedText;
+}
+	
+</script>
+{% endblock %}
+
+{% block liens %}
+<a href="/">bienvenue</a>
+
+
+{% endblock %}

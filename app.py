@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from yourappdb import query_db, get_db
+import json
+import random
 from flask import g
 
 app = Flask(__name__)
@@ -17,13 +19,34 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+@app.route("/addskill", methods=["POST"])
+def addskill():
+    print("hey")
+
+    print({"name": request.form["mytext"]})
+    skills = query_db('select * from skill where name = :name', {"name": request.form["mytext"]})
+    print("hey")
+    if len(skills) == 0:
+      one_user = query_db("insert into skill (name) values (:name)",{"name": request.form["mytext"]})
+    print("hey")
+    skill = query_db('select * from skill where name = :name', {"name": request.form["mytext"]}, one=True)
+    print("hey")
+    jobofferskills = query_db('insert into jobofferskill (joboffer_id, skill_id) values (:joboffer_id, :skill_id)', {"skill_id": skill["id"], "joboffer_id": request.form["jobofferid"]})
+    print("hey")
+
+    print(json.dumps({"name": request.form["mytext"]}))
+    #return json.dumps({"name": request.form["mytext"]})
+    return ({"name": request.form["mytext"]})
+
 @app.route("/")
 def hello_world():
     user = query_db('select * from contacts')
+    domaine = query_db('select * from domaine order by random() limit 1',one=True)
+    job = query_db('select * from job order by random() limit 1',one=True)
     the_username = "anonyme"
     one_user = query_db('select * from contacts where first_name = ?',
                 [the_username], one=True)
-    return render_template("hey.html", users=user, one_user=one_user, the_title="my title")
+    return render_template("hey.html", randomjob=job, randomdomaine=domaine, users=user, one_user=one_user, the_title="my title")
 @app.route("/add_one_branche", methods=["GET","POST"])
 def add_one_branche():
 
@@ -76,6 +99,37 @@ def add_one_job():
     one_user = query_db("select * from job limit 1", one=True)
     return render_template("jobform.html", jobs=user, one_user=one_user, the_title="add new job")
 
+@app.route("/add_one_joboffer", methods=["GET","POST"])
+def add_one_joboffer():
+
+    city = query_db('select * from city')
+    if request.method == 'POST':
+
+        the_username = "anonyme"
+        one_user = query_db("insert into joboffer (title,content,city_id,company) values (:title,:content,:city_id,:company)",request.form)
+
+        user = query_db('select joboffer.*, (SELECT GROUP_CONCAT(skill.name, "=%=") FROM skill) skills from joboffer')
+        return render_template("jobofferform.html", cities=city, joboffers=user, one_user=one_user, the_title="add new job offer")
+    user = query_db('select *, (SELECT GROUP_CONCAT(skill.name, "=%=") FROM skill) skills  from joboffer')
+
+    one_user = query_db("select * from joboffer limit 1", one=True)
+    return render_template("jobofferform.html", cities=city, joboffers=user, one_user=one_user, the_title="add new job offer")
+
+
+
+@app.route("/add_one_city", methods=["GET","POST"])
+def add_one_city():
+
+    if request.method == 'POST':
+
+        the_username = "anonyme"
+        one_user = query_db("insert into city (name) values (:name)",request.form)
+        user = query_db('select * from city')
+        return render_template("cityform.html", citys=user, one_user=one_user, the_title="add new city")
+    user = query_db('select * from city')
+    one_user = query_db("select * from city limit 1", one=True)
+    return render_template("cityform.html", citys=user, one_user=one_user, the_title="add new city")
+
 @app.route("/add_one_country", methods=["GET","POST"])
 def add_one_country():
 
@@ -103,8 +157,8 @@ def add_one_user():
         one_user = query_db("insert into user (username,email,phone,country_id,job_id,secteurdapplication_id,domaine_id,branche_id) values (:username,:email,:phone,:country_id,:job_id,:secteurdapplication_id,:domaine_id,:branche_id)",request.form)
         user = query_db('select * from user')
         return render_template("userform.html", users=user, one_user=one_user, the_title="add new user",jobs=jobs, secteurdapplications=secteurdapplications, branches=branches, domaines=domaines, countries=countries)
-    user = query_db('select * from user')
+    user = query_db('select user.*, secteur.name as secteurname, country.name as countryname, job.name as jobname, domaine.name as domainename, branche.name as branchename from user left join branche on branche.id = user.branche_id left join secteurdapplication secteur on secteur.id = user.secteurdapplication_id left join domaine on domaine.id = user.domaine_id left join job on job.id = user.job_id left join country on country.id = user.country_id')
 
-    one_user = query_db("select * from user limit 1", one=True)
+    one_user = query_db("select * from user  limit 1", one=True)
     return render_template("userform.html", users=user, one_user=one_user, the_title="add new user",jobs=jobs, secteurdapplications=secteurdapplications, branches=branches, domaines=domaines, countries=countries)
 

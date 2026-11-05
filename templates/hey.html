@@ -5,6 +5,9 @@ debut de mes mots: bienvenue dans automatic job journey
 {% endblock %}
 {% block content %}
 <h1># automatic-job-journey</h1>
+<p>code ton avenir</p>
+<p>recherches tu un travail dans {{ randomdomaine["name"] }}?</p>
+<p>recherches tu un travail de {{ randomjob["name"] }}?</p>
 {% for x in users | reverse %}
  <li>{{ x["first_name"]  }}</li>
 
@@ -17,6 +20,10 @@ Les secteurs dapplication désignent les grands domaines dactivité où une tech
 {% endblock %}
 {% block liens %}
 <a href="/">welcome</a>
-<a href="/add_one_branche"> add one branche</a><a href="/add_one_domaine"> add one domaine</a><a href="/add_one_secteurdapplication"> add one secteurdapplication</a><a href="/add_one_job"> add one job</a><a href="/add_one_country"> add one country</a><a href="/add_one_user"> add one user</a>
+<a href="/add_one_city"> add one city</a>
+<a href="/add_one_joboffer"> add one job offer</a>
+<a href="/add_one_branche"> add one branche</a>
+
+<a href="/add_one_domaine"> add one domaine</a><a href="/add_one_secteurdapplication"> add one secteurdapplication</a><a href="/add_one_job"> add one job</a><a href="/add_one_country"> add one country</a><a href="/add_one_user"> add one user</a>
 {% endblock %}
 

@@ -41,4 +41,43 @@
 </select>
 </div>
 
-<div class="actions"><input type="submit"/></div></form>{% for x in users %}{{x["username"] }}{% endfor %}{% endblock %}{% block liens %}<a href="/">bienvenue</a><a href="/add_one_user"> add one user</a>{% endblock %}
+<div class="actions"><input type="submit"/></div></form>
+
+
+<div class="row row-cols-1 md:row-cols-2 g-4">
+
+
+{% for x in users %}
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">{{x["username"] }}</h4>
+        <p class="card-text">
+	<b>phone </b>{{x["phone"] }}
+	</p>
+        <p class="card-text">
+	<b>email </b>{{x["email"] }}
+	</p>
+        <p class="card-text">
+	<b>pays</b>{{x["countryname"] }}
+	</p>
+        <p class="card-text">
+	<b>nom de la branche</b>{{x["branchename"] }}
+	</p>
+        <p class="card-text">
+	<b>nom du secteur</b>{{x["secteurnname"] }}
+	</p>
+        <p class="card-text">
+	<b>nom du domaine</b>{{x["domainename"] }}
+	</p>
+        <p class="card-text">
+	<b>nom de l'emploi </b>{{x["jobname"] }}
+	</p>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}{% block liens %}<a href="/">bienvenue</a><a href="/add_one_user"> add one user</a>{% endblock %}

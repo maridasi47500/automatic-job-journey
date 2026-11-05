@@ -1,0 +1,71 @@
+{% extends 'base.html' %}{% block content %}<form method="POST"><div class="field"><label>username</label><input name="username"/></div><div class="field"><label>email</label><input name="email"/></div><div class="field"><label>phone</label><input name="phone"/></div>
+
+<div class="field"><label>country_id</label>
+
+<select name="country_id">
+{% for x in countries %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+
+</div>
+
+<div class="field"><label>job_id</label>
+<select name="job_id">
+{% for x in jobs %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+
+</div>
+<div class="field"><label>secteurdapplication_id</label>
+<select name="secteurdapplication_id">
+{% for x in secteurdapplications %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="field"><label>domaine_id</label>
+<select name="domaine_id">
+{% for x in domaines %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="field"><label>branche_id</label>
+<select name="branche_id">
+{% for x in branches %}
+<option value="{{ x['id'] }}">{{ x['name'] }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="actions"><input type="submit"/></div></form>
+
+
+<div class="row row-cols-1 md:row-cols-2 g-4">
+
+
+{% for x in users %}
+  <div class="col">
+    <div class="card">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">{{x["username"] }}</h4>
+        <p class="card-text">
+	<b>phone </b>{{x["phone"] }}
+	<b>email </b>{{x["email"] }}
+	<b>pays</b>{{x["countryname"] }}
+	<b>nom de la branche</b>{{x["branchename"] }}
+	<b>nom du secteur</b>{{x["secteurnname"] }}
+	<b>nom du domaine</b>{{x["domainename"] }}
+	<b>nom de l'emploi </b>{{x["jobname"] }}
+	</p>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}{% block liens %}<a href="/">bienvenue</a><a href="/add_one_user"> add one user</a>{% endblock %}

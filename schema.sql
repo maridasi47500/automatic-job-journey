@@ -79,3 +79,44 @@ create table if not exists user(
             domaine_id text,
             branche_id text
                     );
+create table if not exists city(
+        id integer primary key autoincrement,
+        name text,
+            country_id text
+                    );
+create table if not exists joboffer(
+        id integer primary key autoincrement,
+        title text,
+            content text,
+            company text,
+            city_id text
+                    );
+create table if not exists jobofferskill(
+        id integer primary key autoincrement,
+            skill_id text,
+            joboffer_id text
+                    );
+create table if not exists userskill(
+        id integer primary key autoincrement,
+            skill_id text,
+            user_id text
+                    );
+create table if not exists skill(
+        id integer primary key autoincrement,
+            name text
+                    );
+
+create table if not exists joboffersoftskill(
+        id integer primary key autoincrement,
+            softskill_id text,
+            joboffer_id text
+                    );
+create table if not exists usersoftskill(
+        id integer primary key autoincrement,
+            softskill_id text,
+            user_id text
+                    );
+create table if not exists softskill(
+        id integer primary key autoincrement,
+            name text
+                    );
